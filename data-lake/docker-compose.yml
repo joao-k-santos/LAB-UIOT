@@ -1,0 +1,42 @@
+services:
+  garage:
+    image: dxflrs/garage:v0.9.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3900:3900" # API S3
+      - "3901:3901" # RPC Interno
+    volumes:
+      - garage_data:/var/lib/garage
+
+  kafka:
+    image: bitnami/kafka:3.7
+    environment:
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
+      # ... demais configs do KRaft
+    deploy:
+      resources:
+        limits:
+          memory: 2G # Protegendo a RAM para o Spark/ML
+    volumes:
+      - kafka_data:/bitnami/kafka
+
+  spark-master:
+    image: bitnami/spark:3.5
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - "8080:8080"
+
+networks:
+  datalake_net:
+    driver: overlay
+
+volumes:
+  garage_data:
+  kafka_data:

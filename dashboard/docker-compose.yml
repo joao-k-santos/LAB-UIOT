@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_nids
+    restart: always
+    environment:
+      POSTGRES_DB: nids_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    network_mode: "host"
+    volumes:
+      - pgdata:/var/lib/postgresql
+      # Mapeia o seu arquivo local para a pasta de inicialização do container
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pgdata:
