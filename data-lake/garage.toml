@@ -1,0 +1,18 @@
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+
+# Modo standalone (nó único local). A doc aceita "none" ou "1" para isso.
+replication_mode = "none" 
+compression_level = 2
+
+# Configuração de rede exigida na raiz pela v0.9.x
+rpc_bind_addr = "[::]:3901"
+rpc_secret = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+
+# Como é um nó isolado, não temos outros peers para bootstrap
+bootstrap_peers = []
+
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3.garage"
