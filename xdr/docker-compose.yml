@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  xdr-uiot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: xdr-uiot
+    
+    # CRUCIAL: Permite que o contêiner use a pilha de rede da máquina física
+    network_mode: host
+    
+    # CRUCIAL: Dá permissão ao contêiner para farejar a interface de rede em modo promíscuo
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      
+    environment:
+      - INTERFACE_BORDA=eth0  # <--- Substitua pelo nome real da sua placa de rede da borda
+      
+    volumes:
+      - ./vector_disk_buffer:/var/lib/vector    # Diretório para o buffer de disco persistir se o contêiner reiniciar
+      
+    restart: unless-stopped

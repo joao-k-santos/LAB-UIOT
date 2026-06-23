@@ -8,19 +8,23 @@ Este documento consolida o passo a passo completo para implantar, tunelar e oper
 
 A infraestrutura foi desenhada para rodar em um nó local único (standalone) hospedado sob o hipervisor Proxmox. Os volumes locais do host Linux são amarrados para garantir a persistência dos logs estruturados e dos metadados transacionais.
 
-No terminal SSH do seu servidor (`uiot-dl`), prepare o ambiente limpando resíduos anteriores e forçando as permissões corretas para evitar travas de IO (Input/Output) do banco do Garage e permissões de ID do Kafka:
+No terminal SSH do seu servidor (`uiot-dl`), prepare o ambiente limpando resíduos anteriores e forçando as permissões corretas para evitar travas de IO (Input/Output) do banco do Garage, permissões de ID do Kafka e o erro do Docker de criar arquivos de configuração como diretórios:
 
 ```bash
 # Navegue até o diretório central do ecossistema
 cd ~/data-lake
 
 # Resete estruturas corrompidas de metadados transacionais anteriores
-sudo rm -rf garage_data kafka_data
+sudo docker compose down
+sudo rm -rf garage_data kafka_data notebooks garage.toml
 
 # Crie fisicamente os subdiretórios estruturais requisitados pelos contêineres
 mkdir -p garage_data/meta garage_data/data notebooks
 
-# Conceda privilégios totais de leitura/escrita para evitar travas no SQLite/LMDB do Garage
+# Crie o arquivo em branco no host para impedir que o Docker o crie incorretamente como pasta
+touch garage.toml
+
+# Conceda privilégios de leitura/escrita para evitar travas no SQLite/LMDB do Garage
 sudo chmod -R 777 garage_data
 
 # Atribua a propriedade da pasta ao UID interno exigido pelo processo oficial do Kafka
@@ -62,7 +66,7 @@ root_domain = ".s3.garage"
 
 ### B. `docker-compose.yml`
 
-*Nota: Removidas todas as marcações textuais de anotações que quebravam o interpretador YAML do Docker. Os comandos de boot chamam os binários absolutos e classes Java adequadas.*
+*Nota: Todos os serviços foram unificados sob a rede comum `datalake_net` com o driver `bridge` para permitir a comunicação local nativa no Ubuntu Server. O broker do Kafka conta com ouvintes duplos isolando a ingestão de borda externa da leitura interna do cluster Spark.*
 
 ```yaml
 services:
@@ -77,6 +81,8 @@ services:
       - ./garage_data:/var/lib/garage
       - ./garage.toml:/etc/garage.toml:ro
     command: /garage -c /etc/garage.toml server
+    networks:
+      - datalake_net
     restart: unless-stopped
 
   # --- CAMADA DE MENSAGERIA (MENSAGENS/BUFFER) ---
@@ -84,19 +90,44 @@ services:
     image: apache/kafka:3.7.0
     container_name: kafka-security-hub
     ports:
-      - "9092:9092"
+      - "9094:9094" # Porta exposta para ingestão dos agentes de borda externos (GoFlow2/Vector)
     environment:
       - KAFKA_NODE_ID=1
       - KAFKA_PROCESS_ROLES=broker,controller
-      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      # INTERNAL para comunicação dentro do Docker, EXTERNAL para fora do servidor, CONTROLLER para o quórum KRaft
+      - KAFKA_LISTENERS=INTERNAL://:9092,EXTERNAL://0.0.0.0:9094,CONTROLLER://:9093
+      # Rotas de rede anunciadas: Spark consome via 'kafka:9092', Agentes externos enviam via IP do Ubuntu '172.16.9.72:9094'
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka:9092,EXTERNAL://172.16.9.72:9094
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
       - KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093
       - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_LOG_DIRS=/var/lib/kafka/data
       - KAFKA_CLUSTER_ID=4L62xdw2Rxy2wAF4968gAg
     volumes:
-      - ./kafka_data:/var/lib/kafka/data
+      - kafka_data:/var/lib/kafka/data
+    networks:
+      - datalake_net
+    healthcheck:
+      test: ["CMD", "/opt/kafka/bin/kafka-broker-api-versions.sh", "--bootstrap-server", "localhost:9092"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     restart: unless-stopped
+
+  # --- AUTOMAÇÃO: CRIAÇÃO DOS TÓPICOS ON-STARTUP ---
+  kafka-init:
+    image: apache/kafka:3.7.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    networks:
+      - datalake_net
+    entrypoint:
+      - "bash"
+      - "-c"
+      - "/opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic ipfix-network-flow --partitions 3 --replication-factor 1 --bootstrap-server kafka:9092 && echo '🚀 Tópicos provisionados com sucesso!'"
 
   # --- CAMADA DE PROCESSAMENTO (DISTRIBUÍDO) ---
   spark-master:
@@ -108,6 +139,8 @@ services:
       - "8080:8080" # Web UI
       - "7077:7077" # Comunicação interna
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    networks:
+      - datalake_net
     restart: unless-stopped
 
   spark-worker:
@@ -118,6 +151,8 @@ services:
     environment:
       - SPARK_MODE=worker
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    networks:
+      - datalake_net
     restart: unless-stopped
 
   # --- AMBIENTE DE DESENVOLVIMENTO (PYTHON/ML) ---
@@ -130,11 +165,16 @@ services:
       - JUPYTER_ENABLE_LAB=yes
     volumes:
       - ./notebooks:/home/jovyan/work
+    networks:
+      - datalake_net
     restart: unless-stopped
 
 networks:
   datalake_net:
-    driver: overlay
+    driver: bridge
+
+volumes:
+  kafka_data:
 
 ```
 
@@ -152,13 +192,14 @@ sudo docker compose up -d
 Como restrições e firewalls intermediários da VPN barram acessos TCP diretos às portas altas (`8888`, `8080`) no IP de destino `172.16.9.72`, utilizamos uma máquina ponte na rede local como salto automatizado (ProxyJump) acoplado a um redirecionamento de portas local (Port Forwarding).
 
 1. No seu **computador pessoal (máquina física local)**, abra ou recrie o arquivo de configuração de SSH:
+
 ```bash
 nano ~/.ssh/config
 
 ```
 
-
 2. Cole a seguinte estrutura de salto transparente:
+
 ```text
 Host ponte
     HostName IP_DA_SUA_MAQUINA_PONTE_AQUI
@@ -171,22 +212,21 @@ Host uiot-dl
 
 ```
 
-
 3. Ajuste as permissões do arquivo para satisfazer a política estrita de segurança do OpenSSH:
+
 ```bash
 chmod 600 ~/.ssh/config
 
 ```
 
-
 4. Dispare o comando para trazer as interfaces web do Jupyter Lab e do Spark Master criptografadas para o seu navegador:
+
 ```bash
 ssh -L 8888:localhost:8888 -L 8080:localhost:8080 uiot-dl
 
 ```
 
-
-*Mantenha essa sessão ativa. Para encerrar o túnel e liberar as portas do seu computador físico mais tarde, basta fechar esse terminal ou digitar `exit`.*
+*Mantenha essa sessão activa. Para encerrar o túnel e liberar as portas do seu computador físico mais tarde, basta fechar esse terminal ou digitar `exit`.*
 
 ---
 
@@ -299,7 +339,7 @@ except Exception as e:
 ### Célula 5: Ativação do Pipeline de Streaming Estruturado em Tempo Real
 
 ```python
-# Mapeamento do Schema padronizado (Formato NetFlow/Akvorado simplificado)
+# Mapeamento do Schema padronizado (Formato NetFlow/IPFIX estruturado)
 log_schema = StructType([
     StructField("vlan", IntegerType(), True),
     StructField("src_ip", StringType(), True),
@@ -309,11 +349,11 @@ log_schema = StructType([
     StructField("bytes", IntegerType(), True)
 ])
 
-# Conexão de streaming contínuo ao cluster interno do Kafka
+# Conexão de streaming contínuo ao cluster interno do Kafka na escuta interna
 df_kafka = spark.readStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "kafka:9092") \
-    .option("subscribe", "security-network-flux") \
+    .option("subscribe", "ipfix-network-flow") \
     .option("startingOffsets", "latest") \
     .load()
 
@@ -332,7 +372,7 @@ query = df_parsed.writeStream \
     .partitionBy("vlan") \
     .start()
 
-print("🔥 Pipeline de streaming em tempo real ativado e escutando tópicos do Kafka.")
+print("🔥 Pipeline de streaming em tempo real ativado e escutando o tópico ipfix-network-flow.")
 
 ```
 
@@ -342,21 +382,22 @@ print("🔥 Pipeline de streaming em tempo real ativado e escutando tópicos do 
 
 Para testar o fluxo de ponta a ponta (Ingestão ➡️ Buffer ➡️ Processamento Streaming ➡️ Armazenamento S3):
 
-1. Abra uma sessão SSH paralela no host do servidor e chame o produtor interativo do Kafka:
+1. Abra uma sessão SSH paralela no host do seu servidor Ubuntu e execute o produtor interativo utilizando o caminho absoluto dos binários:
+
 ```bash
-sudo docker compose exec kafka-security-hub kafka-console-producer.sh --broker-list localhost:9092 --topic security-network-flux
+sudo docker compose exec kafka /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic ipfix-network-flow
 
 ```
 
+2. Assim que o cursor interativo `>` abrir, cole a linha abaixo em formato JSON para simular um ataque da botnet Mirai varrendo a infraestrutura na porta do protocolo Telnet e pressione Enter:
 
-2. Assim que o cursor interativo `>` abrir, insira a linha abaixo em formato JSON para simular um ataque de botnet infectando e escaneando a rede interna e pressione Enter:
 ```json
 {"vlan": 30, "src_ip": "192.168.30.77", "dst_ip": "192.168.30.1", "dst_port": 23, "packets": 600, "bytes": 36000}
 
 ```
 
+O Apache Spark consumirá o evento instantaneamente por streaming de dentro do broker e ordenará ao Garage a criação estruturada da subpasta `live_network_logs/vlan=30/`. Seus dados estarão persistidos de forma limpa, indexada e imutável, prontos para alimentar o treinamento dos modelos analíticos de Cyber Inteligência!
 
-
-O Apache Spark consumirá o evento instantaneamente por streaming e ordenará ao Garage a criação estruturada da subpasta `live_network_logs/vlan=30/`. Seus dados estarão persistidos de forma limpa e indexada, prontos para alimentar seus modelos analíticos de detecção de anomalias por entropia de portas!
+```
 
 ```

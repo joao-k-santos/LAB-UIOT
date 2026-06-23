@@ -10,26 +10,54 @@ services:
       - ./garage_data:/var/lib/garage
       - ./garage.toml:/etc/garage.toml:ro
     command: /garage -c /etc/garage.toml server
+    networks:
+      - datalake_net
     restart: unless-stopped
 
+  # --- CAMADA DE MENSAGERIA (MENSAGENS/BUFFER) ---
   # --- CAMADA DE MENSAGERIA (MENSAGENS/BUFFER) ---
   kafka:
     image: apache/kafka:3.7.0
     container_name: kafka-security-hub
     ports:
-      - "9092:9092"
+      - "9094:9094"
     environment:
       - KAFKA_NODE_ID=1
       - KAFKA_PROCESS_ROLES=broker,controller
-      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_LISTENERS=INTERNAL://:9092,EXTERNAL://0.0.0.0:9094,CONTROLLER://:9093
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka:9092,EXTERNAL://172.16.9.72:9094
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
       - KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093
       - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_LOG_DIRS=/var/lib/kafka/data
       - KAFKA_CLUSTER_ID=4L62xdw2Rxy2wAF4968gAg
     volumes:
       - kafka_data:/var/lib/kafka/data
+    networks:
+      - datalake_net
+    # 🟢 NOVO: O Docker vai testar a porta interna do Kafka a cada 5 segundos
+    healthcheck:
+      test: ["CMD", "/opt/kafka/bin/kafka-broker-api-versions.sh", "--bootstrap-server", "localhost:9092"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     restart: unless-stopped
+
+  # --- AUTOMAÇÃO: CRIAÇÃO DOS TÓPICOS ON-STARTUP ---
+  # --- AUTOMAÇÃO: CRIAÇÃO DOS TÓPICOS ON-STARTUP ---
+  kafka-init:
+    image: apache/kafka:3.7.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    networks:
+      - datalake_net
+    entrypoint: 
+      - "bash"
+      - "-c"
+      - "/opt/kafka/bin/kafka-topics.sh --create --if-not-exists --topic ipfix-network-flow --partitions 3 --replication-factor 1 --bootstrap-server kafka:9092 && echo '🚀 Tópicos provisionados com sucesso!'"
 
   # --- CAMADA DE PROCESSAMENTO (DISTRIBUÍDO) ---
   spark-master:
@@ -41,6 +69,8 @@ services:
       - "8080:8080" # Web UI
       - "7077:7077" # Comunicação interna
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    networks:
+      - datalake_net
     restart: unless-stopped
 
   spark-worker:
@@ -51,6 +81,8 @@ services:
     environment:
       - SPARK_MODE=worker
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    networks:
+      - datalake_net
     restart: unless-stopped
 
   # --- AMBIENTE DE DESENVOLVIMENTO (PYTHON/ML) ---
@@ -63,12 +95,13 @@ services:
       - JUPYTER_ENABLE_LAB=yes
     volumes:
       - ./notebooks:/home/jovyan/work
+    networks:
+      - datalake_net
     restart: unless-stopped
 
 networks:
   datalake_net:
-    driver: overlay
+    driver: bridge # Perfeito para o isolamento local no Ubuntu Server
 
 volumes:
-  garage_data:
-  kafka_data:
+  kafka_data: # Mantido como volume nomeado gerenciado pelo Docker para o Kafka
