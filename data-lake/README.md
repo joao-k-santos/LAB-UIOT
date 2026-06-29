@@ -29,7 +29,6 @@ sudo chmod -R 777 garage_data
 
 # Atribua a propriedade da pasta ao UID interno exigido pelo processo oficial do Kafka
 sudo chown -R 1000:1000 kafka_data
-
 ```
 
 ---
@@ -61,7 +60,6 @@ bootstrap_peers = []
 s3_region = "garage"
 api_bind_addr = "[::]:3900"
 root_domain = ".s3.garage"
-
 ```
 
 ### B. `docker-compose.yml`
@@ -175,14 +173,12 @@ networks:
 
 volumes:
   kafka_data:
-
 ```
 
 Suba os serviços executando o comando abaixo:
 
 ```bash
 sudo docker compose up -d
-
 ```
 
 ---
@@ -192,14 +188,11 @@ sudo docker compose up -d
 Como restrições e firewalls intermediários da VPN barram acessos TCP diretos às portas altas (`8888`, `8080`) no IP de destino `172.16.9.72`, utilizamos uma máquina ponte na rede local como salto automatizado (ProxyJump) acoplado a um redirecionamento de portas local (Port Forwarding).
 
 1. No seu **computador pessoal (máquina física local)**, abra ou recrie o arquivo de configuração de SSH:
-
 ```bash
 nano ~/.ssh/config
-
 ```
 
 2. Cole a seguinte estrutura de salto transparente:
-
 ```text
 Host ponte
     HostName IP_DA_SUA_MAQUINA_PONTE_AQUI
@@ -209,24 +202,19 @@ Host uiot-dl
     HostName 172.16.9.72
     User uiot
     ProxyJump ponte
-
 ```
 
 3. Ajuste as permissões do arquivo para satisfazer a política estrita de segurança do OpenSSH:
-
 ```bash
 chmod 600 ~/.ssh/config
-
 ```
 
 4. Dispare o comando para trazer as interfaces web do Jupyter Lab e do Spark Master criptografadas para o seu navegador:
-
 ```bash
 ssh -L 8888:localhost:8888 -L 8080:localhost:8080 uiot-dl
-
 ```
 
-*Mantenha essa sessão activa. Para encerrar o túnel e liberar as portas do seu computador físico mais tarde, basta fechar esse terminal ou digitar `exit`.*
+*Mantenha essa sessão ativa. Para encerrar o túnel e liberar as portas do seu computador físico mais tarde, basta fechar esse terminal ou digitar `exit`.*
 
 ---
 
@@ -249,45 +237,57 @@ sudo docker compose exec garage /garage bucket create meu-data-lake
 
 # 5. Conceda permissão total de Leitura (Read) e Escrita (Write) da chave sobre o bucket
 sudo docker compose exec garage /garage bucket allow meu-data-lake --read --write --key minha-chave
-
 ```
 
 ---
 
-## 📓 5. Construção do Pipeline e Gerenciamento do `.env` no Jupyter
+## 🛠️ 5. Administração Manual de Tópicos no Kafka (CLI)
+
+Embora o contêiner `kafka-init` automatize a criação do pipeline principal, você pode gerenciar, auditar e criar tópicos adicionais manualmente de dentro do broker usando o caminho completo dos scripts.
+
+### A. Listar todos os tópicos ativos do cluster
+```bash
+sudo docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+
+### B. Criar um novo tópico customizado
+```bash
+# Altere o '--topic' para o nome desejado. Recomendado usar 3 partições para paralelismo do Spark.
+sudo docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --create --topic ipfix-network-flow --partitions 3 --replication-factor 1 --bootstrap-server localhost:9092
+```
+
+### C. Descrever detalhes e partições de um tópico específico
+```bash
+sudo docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --describe --topic ipfix-network-flow --bootstrap-server localhost:9092
+```
+
+---
+
+## 📓 6. Construção do Pipeline e Gerenciamento do `.env` no Jupyter
 
 Abra o seu navegador web local no endereço `http://localhost:8888` e insira o token de segurança obtido através dos logs do contêiner (`sudo docker compose logs pyspark-notebook`).
 
 Abra um notebook Python 3 em branco e execute as células organizadas sequencialmente a seguir:
 
 ### Célula 1: Instalação do Gerenciador de Ambiente
-
 ```python
 !pip install python-dotenv
-
 ```
 
 ### Célula 2: Geração Automatizada e Oculta do Arquivo `.env`
-
-*Esta célula utiliza comandos mágicos para persistir as chaves de acesso no mesmo diretório de execução, mantendo as credenciais fora do código aberto.*
-
 ```python
 %%writefile .env
 minha_chave=GKe752e73e675cc700c0eb72f3
 secret_key=COLE_AQUI_O_SECRET_KEY_INTEIRO_EXIBIDO_PELO_GARAGE
-
 ```
 
-### Célula 3: Boot da Sessão Spark e Acoplamento Hadoop S3A
-
-*Inclusão mandatória do pacote `import os` para ler as variáveis injetadas pelo `load_dotenv()`.*
+### Célula 3: Boot da Sessão Spark e Tuning Hadoop S3A para o Garage
+*Esta célula inclui parâmetros estritos de otimização de commits (`algorithm.version=2` e `directory.marker.retention=keep`) que eliminam os loops lentos de requisições de deleção, tornando as escritas locais no Garage instantâneas.*
 
 ```python
 import os
 from dotenv import load_dotenv
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, from_json, current_timestamp
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 
 # Carrega na memória as variáveis declaradas no arquivo oculto
 load_dotenv()
@@ -309,14 +309,23 @@ sc._jsc.hadoopConfiguration().set("fs.s3a.path.style.access", "true")
 sc._jsc.hadoopConfiguration().set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
 sc._jsc.hadoopConfiguration().set("fs.s3a.connection.ssl.enabled", "false")
 
-print("🚀 Sessão Spark configurada com sucesso usando segurança via arquivo .env!")
+# Parâmetros de compatibilidade regional do Garage
+sc._jsc.hadoopConfiguration().set("fs.s3a.endpoint.region", "garage")
+sc._jsc.hadoopConfiguration().set("fs.s3a.region", "garage")
+sc._jsc.hadoopConfiguration().set("fs.s3a.change.detection.mode", "none")
+sc._jsc.hadoopConfiguration().set("fs.s3a.change.detection.source", "none")
 
+# ⚡ TUNING DE PERFORMANCE: ACELERAÇÃO DE ESCRITA NO OBJECT STORAGE LOCAL
+sc._jsc.hadoopConfiguration().set("mapreduce.fileoutputcommitter.algorithm.version", "2")
+sc._jsc.hadoopConfiguration().set("fs.s3a.directory.marker.retention", "keep")
+sc._jsc.hadoopConfiguration().set("fs.s3a.fast.upload", "true")
+sc._jsc.hadoopConfiguration().set("fs.s3a.fast.upload.buffer", "disk")
+
+print("🚀 Sessão Spark tunada e otimizada para o Garage HQ!")
 ```
 
 ### Célula 4: Teste de Escrita e Leitura Estática (Validação S3A)
-
 ```python
-# Massa de dados de teste contendo metadados de incidentes
 dados_teste = [
     ("VLAN_30", "192.168.30.99", "Mirai Port Scan Detectado", "ALTA"),
     ("VLAN_40", "192.168.40.12", "Tentativa Bruteforce SSH", "MEDIA")
@@ -325,20 +334,20 @@ colunas = ["origem_vlan", "ip_origem", "evento", "severidade"]
 df_teste = spark.createDataFrame(dados_teste, schema=colunas)
 
 try:
-    # Persiste em formato binário otimizado colunar Parquet
     df_teste.write.format("parquet").mode("overwrite").save("s3a://meu-data-lake/teste_alertas/")
     print("✨ Sucesso! O Spark conseguiu autenticar, gravar e fechar pacotes no Garage HQ.")
-    
-    # Valida a leitura reversa do dado persistido
     spark.read.parquet("s3a://meu-data-lake/teste_alertas/").show()
 except Exception as e:
     print(f"❌ Falha crítica de privilégio ou IO no Object Storage: {e}")
-
 ```
 
-### Célula 5: Ativação do Pipeline de Streaming Estruturado em Tempo Real
+### Célula 5: Ativação do Pipeline de Streaming Estruturado (Background Job)
+*Nota: Definido `"startingOffsets": "earliest"` para garantir que toda mensagem inserida no Kafka seja processada, mesmo que o pipeline tenha sido iniciado após o envio.*
 
 ```python
+from pyspark.sql.functions import col, from_json, current_timestamp
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
 # Mapeamento do Schema padronizado (Formato NetFlow/IPFIX estruturado)
 log_schema = StructType([
     StructField("vlan", IntegerType(), True),
@@ -354,7 +363,7 @@ df_kafka = spark.readStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "kafka:9092") \
     .option("subscribe", "ipfix-network-flow") \
-    .option("startingOffsets", "latest") \
+    .option("startingOffsets", "earliest") \
     .load()
 
 # Conversão do binário de carga do Kafka em dados tipados estruturados
@@ -372,32 +381,49 @@ query = df_parsed.writeStream \
     .partitionBy("vlan") \
     .start()
 
-print("🔥 Pipeline de streaming em tempo real ativado e escutando o tópico ipfix-network-flow.")
+print("🔥 Pipeline de streaming em tempo real ativado em segundo plano!")
+```
 
+### Célula 6: Interrogação e Auditoria de Métricas do Stream
+*Como o streaming roda de forma assíncrona, execute esta célula para auditar a saúde da thread e verificar em tempo real quantas linhas o Spark consumiu e descarregou por segundo.*
+
+```python
+import json
+
+# 1. Valida se a thread de background continua em execução ativa
+print(f"O streaming está ativo? {query.isActive}")
+
+# 2. Exibe o relatório detalhado de telemetria do micro-batch
+if query.lastProgress:
+    print(json.dumps(query.lastProgress, indent=2))
+else:
+    print("Aguardando a entrada da primeira mensagem para gerar telemetria...")
 ```
 
 ---
 
-## 🛰️ 6. Simulação de Ingestão de Ameaça e Validação Finais
+## 🛰️ 7. Simulação de Ameaça e Verificação de Dados Streamados
 
-Para testar o fluxo de ponta a ponta (Ingestão ➡️ Buffer ➡️ Processamento Streaming ➡️ Armazenamento S3):
+Para validar o fluxo de dados em tempo real ponta a ponta:
 
-1. Abra uma sessão SSH paralela no host do seu servidor Ubuntu e execute o produtor interativo utilizando o caminho absoluto dos binários:
-
+1. Abra uma sessão SSH paralela no host do seu servidor Ubuntu e chame o produtor interativo:
 ```bash
 sudo docker compose exec kafka /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic ipfix-network-flow
-
 ```
 
-2. Assim que o cursor interativo `>` abrir, cole a linha abaixo em formato JSON para simular um ataque da botnet Mirai varrendo a infraestrutura na porta do protocolo Telnet e pressione Enter:
-
+2. Assim que o cursor interativo `>` abrir, insira linhas em formato JSON (pressionando Enter a cada inserção) simulando uma varredura de botnet na sua rede:
 ```json
 {"vlan": 30, "src_ip": "192.168.30.77", "dst_ip": "192.168.30.1", "dst_port": 23, "packets": 600, "bytes": 36000}
-
+{"vlan": 40, "src_ip": "192.168.40.10", "dst_ip": "192.168.9.50", "dst_port": 80, "packets": 150, "bytes": 12500}
 ```
 
-O Apache Spark consumirá o evento instantaneamente por streaming de dentro do broker e ordenará ao Garage a criação estruturada da subpasta `live_network_logs/vlan=30/`. Seus dados estarão persistidos de forma limpa, indexada e imutável, prontos para alimentar o treinamento dos modelos analíticos de Cyber Inteligência!
+3. **Verificando os arquivos gerados no Object Storage:**
+Execute a célula 6 no Jupyter. Você verá o contador `"numInputRows"` subir indicando o consumo. Para ler os arquivos que foram streamados de forma incremental para dentro do Data Lake, crie uma nova célula no Jupyter e execute:
 
+```python
+# O Spark lerá os dados salvos e estruturados dinamicamente em partições colunares
+spark.read.parquet("s3a://meu-data-lake/live_network_logs/").show()
 ```
 
+Os logs estarão particionados por VLAN e indexados nativamente no disco do seu Data Lake Privado, prontos para a camada de analytics e Machine Learning!
 ```
