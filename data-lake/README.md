@@ -260,6 +260,10 @@ sudo docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --create --topic i
 ```bash
 sudo docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --describe --topic ipfix-network-flow --bootstrap-server localhost:9092
 ```
+### D. Consumir os logs de um tópico em tempo real
+```bash 
+sudo docker compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic ipfix-network-flow --from-beginning
+```
 
 ---
 

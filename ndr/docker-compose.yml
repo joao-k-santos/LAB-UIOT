@@ -9,7 +9,7 @@ services:
       - NET_ADMIN
       - NET_RAW
     environment:
-      - INTERFACE_BORDA=eth0
-      - KAFKA_BROKER=172.16.9.72:9092
-      - MODO_TRANSPORTE=stdout      # <--- Mude para 'kafka' quando o Data Lake estiver ativo
+      - INTERFACE_BORDA=ens18
+      - KAFKA_BROKER=172.16.9.72:9094
+      - MODO_TRANSPORTE=kafka      # <--- Mude para 'kafka' quando o Data Lake estiver ativo
     restart: unless-stopped

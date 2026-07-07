@@ -1,18 +1,15 @@
-# Etapa 1: Puxa a imagem oficial do GoFlow2 para extrair o binário
-FROM netsampler/goflow2:latest AS goflow2_source
+# Etapa 1: Construir o goflow2 a partir do código fonte usando Golang no Debian
+FROM golang:1.21-bookworm AS builder
+RUN go install github.com/netsampler/goflow2/cmd/goflow2@v1.3.6
 
-# Etapa 2: Monta o ambiente de execução com o softflowd
+# Etapa 2: Preparar a imagem final Debian e instalar o softflowd
 FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y softflowd && rm -rf /var/lib/apt/lists/*
 
-# Instala o softflowd e limpa o cache do apt
-RUN apt-get update && \
-    apt-get install -y softflowd && \
-    rm -rf /var/lib/apt/lists/*
+# Copiar o binário compilado do goflow2 da etapa anterior
+COPY --from=builder /go/bin/goflow2 /goflow2
 
-# Copia o binário do GoFlow2 da Etapa 1 direto para a pasta de executáveis do sistema
-COPY --from=goflow2_source /goflow2 /usr/bin/goflow2
-
-# Copia e configura o script de inicialização
+# Copiar o script de inicialização
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

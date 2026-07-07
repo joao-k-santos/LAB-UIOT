@@ -1,30 +1,18 @@
-#!/bin/bash
-
-# Captura as variáveis do docker-compose ou assume os padrões
-INTERFACE=${INTERFACE_BORDA:-eth0}
-KAFKA_SERVER=${KAFKA_BROKER:-172.16.9.72:9092}
-TRANSPORTE=${MODO_TRANSPORTE:-stdout}
-
+#!/bin/sh
 echo "========================================================"
-echo "🚀 [AER] Iniciando Sonda softflowd na interface: ${INTERFACE}"
+echo "🚀 [AER] Iniciando Sonda softflowd na interface: $INTERFACE_BORDA"
 echo "========================================================"
 
-# AJUSTE AQUI: Adicionado '-c /var/run/softflowd.ctl' para fixar o arquivo de controle
-softflowd -i "${INTERFACE}" -n 127.0.0.1:2055 -v 10 -c /var/run/softflowd.ctl -t general=5 -t maxlife=10 -t tcp.close=1
+# Inicia o softflowd forçando a versão NetFlow v9 (-v 9) - 100% compatível com GoFlow2 e Kafka
+/usr/sbin/softflowd -d -i $INTERFACE_BORDA -n 127.0.0.1:2055 -v 9 -c /var/run/softflowd.ctl -t maxlife=5 -t expint=2 -t tcp=5 -t udp=5 -t icmp=5 -t general=5 &
 
-# Verifica qual modo de transporte foi escolhido
-if [ "$TRANSPORTE" = "stdout" ]; then
-  echo "========================================================"
-  echo "🖥️  [AER] Modo DEBUG: Exibindo fluxos nativamente no TERMINAL..."
-  echo "========================================================"
-  exec goflow2 -listen="netflow://127.0.0.1:2055"
+echo "========================================================"
+if [ "$MODO_TRANSPORTE" = "stdout" ]; then
+    echo "🖥️  [AER] Modo DEBUG: Exibindo fluxos v9 apenas no TERMINAL..."
+    echo "========================================================"
+    exec /goflow2 -listen "netflow://:2055" -format "json" -loglevel "debug"
 else
-  echo "========================================================"
-  echo "🏎️  [AER] Modo PRODUÇÃO: Enviando fluxos para o KAFKA..."
-  echo "========================================================"
-  exec goflow2 \
-    -listen="netflow://127.0.0.1:2055" \
-    -transport="kafka" \
-    -transport.kafka.brokers="${KAFKA_SERVER}" \
-    -transport.kafka.topic="ipfix-network-flow"
+    echo "🌐 [AER] Modo PRODUÇÃO: Enviando fluxos v9 para o Kafka em $KAFKA_BROKER..."
+    echo "========================================================"
+    exec /goflow2 -listen "netflow://:2055" -format "json" -transport "kafka" -transport.kafka.brokers "$KAFKA_BROKER" -transport.kafka.topic "ipfix-network-flow" -loglevel "debug"
 fi
