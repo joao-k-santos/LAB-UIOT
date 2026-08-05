@@ -1,3 +1,38 @@
+# Ignore Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+ENV/
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore secret files
 .env*
 .claude
 .agents
+.env
+
+# Ignore Docker files if you don't want to track them (optional)
+# docker-compose.yml
+# Dockerfile
+
+# Ignore generated Jupyter notebooks (if any)
+# *.ipynb
+
+rede-docker/IRS-LLM/dados
+rede-docker/IRS-LLM/llm-agent
+rede-docker/IRS-LLM/NIDS
+rede-docker/IRS-LLM/regras
+rede-docker/IRS-LLM/LICENSE
+rede-docker/IRS-LLM/README.md

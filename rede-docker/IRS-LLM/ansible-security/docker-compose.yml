@@ -1,0 +1,138 @@
+
+services:
+  orquestrador:
+    build:
+      context: ./orquestrador
+      network: host
+    container_name: orquestrador
+    hostname: orquestrador
+    volumes:
+      - ./orquestrador/scripts:/home/ansible_user/orquestrador/scripts
+      - ./orquestrador/logs:/var/log/seguranca
+      - ./orquestrador/playbooks:/home/ansible_user/orquestrador/playbooks
+      - ./orquestrador/inventory:/home/ansible_user/orquestrador/inventory
+    working_dir: /home/ansible_user/orquestrador
+    tty: true
+    stdin_open: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    privileged: true
+    networks:
+      seguranca_net:
+        ipv4_address: 172.28.0.5
+
+
+  host_final_1:
+    build:
+      context: ./host_final
+      network: host
+    container_name: host_final_1
+    hostname: host_final_1
+    volumes:
+      - ./logs_suricata:/var/log/suricata          # Logs acessíveis do host
+      - ./suricata_config:/etc/suricata
+      - ./suricata-rules:/var/lib/suricata/rules 
+    expose:
+      - "22"
+    ports:
+      - "2222:22"  # SSH para conexão Ansible local
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    privileged: true
+    networks:
+      seguranca_net:
+        ipv4_address: 172.28.0.10
+
+  cnc:
+    build:
+      context: ./cnc
+      network: host
+    image: cnc_bot_image:latest
+    container_name: cnc
+    hostname: cnc
+    expose:
+      - "22"
+    ports:
+      - "4444:22"  # SSH para conexão Ansible local
+    networks:
+      seguranca_net:
+        ipv4_address: 172.28.0.100
+
+  bot_1:
+    image: cnc_bot_image:latest
+    depends_on:
+      - cnc
+    container_name: bot_1
+    hostname: bot_1
+    expose:
+      - "22"
+    ports:
+      - "3333:22"  # SSH para conexão Ansible local
+    networks:
+      seguranca_net:
+        ipv4_address: 172.28.0.20
+
+  # bot_2:
+  #   image: cnc_bot_image:latest
+  #   depends_on:
+  #     - cnc
+  #   container_name: bot_2
+  #   hostname: bot_2
+  #   expose:
+  #     - "22"
+  #   ports:
+  #     - "6666:22"  # SSH para conexão Ansible local
+  #   networks:
+  #     seguranca_net:
+  #       ipv4_address: 172.28.0.30
+
+  # bot_3:
+  #   image: cnc_bot_image:latest
+  #   depends_on:
+  #     - cnc
+  #   container_name: bot_3
+  #   hostname: bot_3
+  #   expose:
+  #     - "22"
+  #   ports:
+  #     - "5555:22"  # SSH para conexão Ansible local
+  #   networks:
+  #     seguranca_net:
+  #       ipv4_address: 172.28.0.40
+
+  # bot_4:
+  #   image: cnc_bot_image:latest
+  #   depends_on:
+  #     - cnc
+  #   container_name: bot_4
+  #   hostname: bot_4
+  #   expose:
+  #     - "22"
+  #   ports:
+  #     - "8888:22"  # SSH para conexão Ansible local
+  #   networks:
+  #     seguranca_net:
+  #       ipv4_address: 172.28.0.50
+
+  # bot_5:
+  #   image: cnc_bot_image:latest
+  #   depends_on:
+  #     - cnc
+  #   container_name: bot_5
+  #   hostname: bot_5
+  #   expose:
+  #     - "22"
+  #   ports:
+  #     - "7777:22"  # SSH para conexão Ansible local
+  #   networks:
+  #     seguranca_net:
+  #       ipv4_address: 172.28.0.60
+
+networks:
+  seguranca_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

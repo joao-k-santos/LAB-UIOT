@@ -1,0 +1,90 @@
+cat: /opt/regras/token.txt: No such file or directory
+Mon Apr 28 12:50:07 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+cat: /opt/regras/token.txt: No such file or directory
+Mon Apr 28 12:55:10 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+ERROR! the playbook: /opt/playbooks/enviar_regras.yml could not be found
+ERROR! the playbook: /opt/playbooks/enviar_regras.yml could not be found
+ERROR! the playbook: /opt/playbooks/enviar_regras.yml could not be found
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+Mon Apr 28 13:35:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+Mon Apr 28 13:55:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Mon Apr 28 14:00:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Mon Apr 28 14:05:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Mon Apr 28 14:10:02 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Mon Apr 28 14:15:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Mon Apr 28 14:20:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: hosts_finais
+cat: /opt/regras/token.txt: No such file or directory
+cat: /opt/regras/token.txt: No such file or directory
+Mon Apr 28 19:59:32 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+cat: /opt/regras/token.txt: No such file or directory
+Mon Apr 28 21:25:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 15:35:02 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 15:40:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 15:45:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 15:50:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 15:55:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 16:00:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 16:05:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 16:10:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 16:15:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 16:45:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 17:25:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+Tue Apr 29 17:45:01 UTC 2025 - Erro ao baixar regras. Playbook não executado.
+[WARNING]: Unhandled error in Python interpreter discovery for host
+host_final_1: Failed to connect to the host via ssh: ssh: connect to host
+172.28.0.10 port 22: Connection refused
+[WARNING]: sftp transfer mechanism failed on [172.28.0.10]. Use ANSIBLE_DEBUG=1
+to see detailed information
+[WARNING]: scp transfer mechanism failed on [172.28.0.10]. Use ANSIBLE_DEBUG=1
+to see detailed information

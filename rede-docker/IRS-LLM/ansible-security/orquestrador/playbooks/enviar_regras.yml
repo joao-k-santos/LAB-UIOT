@@ -1,0 +1,15 @@
+- name: Enviar regras atualizadas do orquestrador para os hosts finais
+  hosts: hosts_finais
+  become: yes
+  tasks:
+    - name: Garantir diretório de destino
+      ansible.builtin.file:
+        path: /opt/regras
+        state: directory
+        mode: "0755"
+
+    - name: Copiar regras atualizadas
+      ansible.builtin.copy:
+        src: /opt/regras/regras.json
+        dest: /opt/regras/regras.json
+        mode: "0644"

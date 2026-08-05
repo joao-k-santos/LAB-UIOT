@@ -1,0 +1,6 @@
+[Unit]
+Description=Processar logs Suricata com PySpark
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/scripts/process_suricata_logs.py

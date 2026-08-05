@@ -1,0 +1,8 @@
+[Unit]
+Description=Aplicar regras de segurança do orquestrador
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/aplicar_regras.sh
+User=root
+Restart=on-failure

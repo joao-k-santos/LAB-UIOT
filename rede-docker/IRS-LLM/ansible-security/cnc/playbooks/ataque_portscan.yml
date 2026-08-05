@@ -1,0 +1,17 @@
+- name: Simular port scan com Nmap
+  hosts: bots
+  become: yes
+  vars:
+    alvo_ip: 172.28.0.10
+  tasks:
+    - name: Instalar Nmap
+      apt:
+        name: nmap
+        state: present
+        update_cache: yes
+
+    - name: Executar port scan com Nmap
+      shell: >
+        nmap -sS -T4 -Pn {{ alvo_ip }} -oN /tmp/portscan_nmap.txt
+      args:
+        warn: false
