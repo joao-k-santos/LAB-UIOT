@@ -1,0 +1,15 @@
+services:
+  ndr-uiot-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ndr-uiot
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      - INTERFACE_BORDA=ens18
+      - KAFKA_BROKER=172.16.9.72:9094
+      - MODO_TRANSPORTE=kafka      # <--- Mude para 'kafka' quando o Data Lake estiver ativo
+    restart: unless-stopped

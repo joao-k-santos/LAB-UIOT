@@ -1,0 +1,36 @@
+# =====================================================================
+# CONFIGURAÇÃO DO VECTOR AGENT (DISPOSITIVO DE BORDA)
+# Pipeline: softflowd (IPFIX) -> Vector -> Kafka + Terminal (Console)
+# =====================================================================
+
+# --- 1. FONTE DE DADOS (SOURCES) ---
+sources:
+  coletor_ipfix_local:
+    type: "netflow"
+    address: "127.0.0.1:2055"  # Escuta o softflowd localmente
+    mode: "ipfix"              # Decodificador NetFlow v10 (IPFIX)
+
+# --- 2. DESTINOS DE DADOS (SINKS) ---
+sinks:
+  # DESTINO 1: Envia para o cluster central do Kafka via VPN
+  envia_data_lake:
+    type: "kafka"
+    inputs:
+      - "coletor_ipfix_local"
+    bootstrap_servers: "172.16.9.72:9092"
+    topic: "ipfix-network-flow"
+    encoding:
+      codec: "json"
+    buffer:
+      type: "disk"
+      max_size: 1073741824     # 1 GB de buffer local
+      when_full: "block"
+
+  # DESTINO 2: NOVO SINK - Imprime os JSONs diretamente no stdout (Terminal)
+  imprime_terminal:
+    type: "console"
+    inputs:
+      - "coletor_ipfix_local"  # Consome da mesma fonte IPFIX
+    target: "stdout"           # Direciona para a saída padrão do container
+    encoding:
+      codec: "json"            # Formata como uma string JSON legível
