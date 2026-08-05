@@ -1,0 +1,76 @@
+- name: Setup do Orquestrador - Baixar e armazenar regras
+  hosts: orquestrador
+  become: yes
+  tasks:
+    - name: Criar diretórios necessários
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /usr/local/bin
+        - /var/log/seguranca
+        - /opt/regras
+
+    - name: Instalar dependências necessárias
+      ansible.builtin.package:
+        name:
+          - curl
+          - jq
+        state: present
+
+    - name: Copiar script de download do orquestrador
+      ansible.builtin.copy:
+        src: "../scripts/baixar_regras.sh"
+        dest: "/usr/local/bin/baixar_regras.sh"
+        mode: "0755"
+
+    - name: Criar serviço systemd para baixar regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/baixar_regras.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Baixar regras da API LLM
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/local/bin/baixar_regras.sh
+          User=root
+          StandardOutput=append:/var/log/seguranca/baixar_regras.log
+          StandardError=append:/var/log/seguranca/baixar_regras.err
+
+    - name: Criar timer para baixar regras periodicamente
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/baixar_regras.timer
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Executa o download de regras a cada 5 minutos
+
+          [Timer]
+          OnBootSec=1min
+          OnUnitActiveSec=5min
+          Unit=baixar_regras.service
+
+          [Install]
+          WantedBy=timers.target
+
+    - name: Ativar o timer
+      ansible.builtin.systemd:
+        name: baixar_regras.timer
+        enabled: yes
+        state: started
+
+    - name: Configurar logrotate
+      ansible.builtin.copy:
+        dest: /etc/logrotate.d/seguranca_regras_orquestrador
+        content: |
+          /var/log/seguranca/*.log /var/log/seguranca/*.err {
+              daily
+              rotate 7
+              compress
+              missingok
+              notifempty
+              create 0640 root adm
+          }

@@ -1,0 +1,33 @@
+%YAML 1.1
+---
+outputs:
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: /var/log/suricata/eve.json
+      types:
+        - alert
+        - flow
+        - dns
+        - http
+
+default-rule-path: /etc/suricata/rules
+
+rule-files:
+  - suricata.rules
+
+app-layer:
+  protocols:
+    modbus:
+      enabled: yes
+      detection-enabled: yes
+    dnp3:
+      enabled: yes
+      detection-enabled: yes
+
+
+af-packet:
+  - interface: eth0
+    cluster-id: 99
+    cluster-type: cluster_flow
+    defrag: yes

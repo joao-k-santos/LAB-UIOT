@@ -1,0 +1,1348 @@
+Erro ao baixar regras.
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+Regras baixadas com sucesso.
+Regras baixadas com sucesso.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection refused", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection timed out", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection timed out", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection timed out", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection timed out", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection timed out", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection timed out", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection timed out", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Erro ao baixar regras.
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+ok: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_final_1]: FAILED! => {"msg": "Failed to connect to the host via ssh: ssh: connect to host 172.28.0.10 port 22: Connection refused"}
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Regras baixadas com sucesso.
+
+PLAY [Enviar regras atualizadas do orquestrador para os hosts finais] **********
+
+TASK [Gathering Facts] *********************************************************
+ok: [host_final_1]
+
+TASK [Garantir diretório de destino] *******************************************
+ok: [host_final_1]
+
+TASK [Copiar regras atualizadas] ***********************************************
+changed: [host_final_1]
+
+PLAY RECAP *********************************************************************
+host_final_1               : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

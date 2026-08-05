@@ -1,0 +1,94 @@
+- name: Setup dos Hosts Finais - Aplicar e desfazer regras
+  hosts: hosts_finais
+  become: yes
+  tasks:
+    - name: Criar diretórios
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /usr/local/bin
+        - /var/log/seguranca
+        - /opt/regras
+
+    - name: Instalar dependências
+      ansible.builtin.package:
+        name:
+          - curl
+          - jq
+        state: present
+
+    - name: Copiar scripts
+      ansible.builtin.copy:
+        src: "../scripts/{{ item }}"
+        dest: "/usr/local/bin/{{ item }}"
+        mode: "0755"
+      loop:
+        - aplicar_regras.sh
+        - desfazer_regras.sh
+
+    - name: Criar serviço systemd aplicar regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/aplicar_regras.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Aplicar regras vindas do orquestrador
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/local/bin/aplicar_regras.sh
+          User=root
+          StandardOutput=append:/var/log/seguranca/aplicar_regras.log
+          StandardError=append:/var/log/seguranca/aplicar_regras.err
+
+    - name: Criar timer aplicar regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/aplicar_regras.timer
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Executa a aplicação de regras a cada 5 minutos
+
+          [Timer]
+          OnBootSec=2min
+          OnUnitActiveSec=5min
+          Unit=aplicar_regras.service
+
+          [Install]
+          WantedBy=timers.target
+
+    - name: Criar serviço desfazer regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/desfazer_regras.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Desfazer regras aplicadas
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/local/bin/desfazer_regras.sh
+          User=root
+          StandardOutput=append:/var/log/seguranca/desfazer_regras.log
+          StandardError=append:/var/log/seguranca/desfazer_regras.err
+
+    - name: Ativar timer aplicar regras
+      ansible.builtin.systemd:
+        name: aplicar_regras.timer
+        enabled: yes
+        state: started
+
+    - name: Configurar logrotate
+      ansible.builtin.copy:
+        dest: /etc/logrotate.d/seguranca_regras_hosts
+        content: |
+          /var/log/seguranca/*.log /var/log/seguranca/*.err {
+              daily
+              rotate 7
+              compress
+              missingok
+              notifempty
+              create 0640 root adm
+          }

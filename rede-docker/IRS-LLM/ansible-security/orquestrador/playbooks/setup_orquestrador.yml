@@ -1,0 +1,188 @@
+- name: Setup do Orquestrador - Baixar e Enviar regras
+  hosts: orquestrador
+  become: yes
+  gather_facts: yes
+
+  vars:
+    env_path: /opt/regras/.env
+    env_content: |
+      API_URL=http://192.168.15.8:8000
+      API_USER=admin
+      API_PASS=admin
+
+  tasks:
+    - name: Criar diretórios necessários
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /usr/local/bin
+        - /var/log/seguranca
+        - /opt/regras
+        - /opt/playbooks
+        - /opt/inventory
+
+
+    - name: Instalar dependências necessárias
+      ansible.builtin.package:
+        name:
+          - curl
+          - jq
+          - cron
+        state: present
+
+    - name: Criar arquivo .env com credenciais da API
+      ansible.builtin.copy:
+        dest: "{{ env_path }}"
+        content: "{{ env_content }}"
+        mode: "0600"
+
+    - name: Copiar playbooks para as pastas corretas
+      ansible.builtin.copy:
+        src: "../playbooks/{{ item }}"
+        dest: "/opt/playbooks/{{ item }}"
+        mode: "0755"
+      loop:
+        - setup_hosts_finais.yml
+        - enviar_regras.yml
+
+    - name: Copiar inventarios para as pastas corretas
+      ansible.builtin.copy:
+        src: "../inventory/{{ item }}"
+        dest: "/opt/inventory/{{ item }}"
+        mode: "0755"
+      loop:
+        - hosts.yml
+
+    - name: Copiar script de download do orquestrador
+      ansible.builtin.copy:
+        src: "../scripts/baixar_regras.sh"
+        dest: "/usr/local/bin/baixar_regras.sh"
+        mode: "0755"
+
+    - name: Copiar script de envio de regras para hosts finais
+      ansible.builtin.copy:
+        src: "../scripts/enviar_regras.sh"
+        dest: "/usr/local/bin/enviar_regras.sh"
+        mode: "0755"
+
+    - name: Verificar se systemd está disponível
+      ansible.builtin.stat:
+        path: /run/systemd/system
+      register: systemd_status
+
+    # --- Configurar baixar regras ---
+    - name: Criar serviço systemd para baixar regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/baixar_regras.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Baixar regras da API LLM
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/local/bin/baixar_regras.sh
+          User=root
+          StandardOutput=append:/var/log/seguranca/baixar_regras.log
+          StandardError=append:/var/log/seguranca/baixar_regras.err
+      when: systemd_status.stat.exists
+
+    - name: Criar timer systemd para baixar regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/baixar_regras.timer
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Executa o download de regras a cada 5 minutos
+
+          [Timer]
+          OnBootSec=1min
+          OnUnitActiveSec=5min
+          Unit=baixar_regras.service
+
+          [Install]
+          WantedBy=timers.target
+      when: systemd_status.stat.exists
+
+    - name: Ativar e iniciar timer systemd para baixar regras
+      ansible.builtin.systemd:
+        name: baixar_regras.timer
+        enabled: yes
+        state: started
+      when: systemd_status.stat.exists
+
+    # --- Configurar enviar regras ---
+    - name: Criar serviço systemd para enviar regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/enviar_regras.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Enviar regras atualizadas aos hosts finais
+          After=network.target
+
+          [Service]
+          ExecStart=/usr/local/bin/enviar_regras.sh
+          User=root
+          StandardOutput=append:/var/log/seguranca/enviar_regras.log
+          StandardError=append:/var/log/seguranca/enviar_regras.err
+      when: systemd_status.stat.exists
+
+    - name: Criar timer systemd para enviar regras
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/enviar_regras.timer
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Executa o envio de regras aos hosts finais a cada 5 minutos
+
+          [Timer]
+          OnBootSec=2min
+          OnUnitActiveSec=5min
+          Unit=enviar_regras.service
+
+          [Install]
+          WantedBy=timers.target
+      when: systemd_status.stat.exists
+
+    - name: Ativar e iniciar timer systemd para enviar regras
+      ansible.builtin.systemd:
+        name: enviar_regras.timer
+        enabled: yes
+        state: started
+      when: systemd_status.stat.exists
+
+    # --- Cron fallback ---
+    - name: Configurar cron como fallback se systemd não estiver disponível (baixar regras)
+      ansible.builtin.cron:
+        name: "Baixar regras da API LLM"
+        user: root
+        job: "/usr/local/bin/baixar_regras.sh >> /var/log/seguranca/baixar_regras.log 2>> /var/log/seguranca/baixar_regras.err"
+        minute: "*/5"
+      when: not systemd_status.stat.exists
+
+    - name: Configurar cron como fallback se systemd não estiver disponível (enviar regras)
+      ansible.builtin.cron:
+        name: "Enviar regras aos hosts finais"
+        user: root
+        job: "/usr/local/bin/enviar_regras.sh >> /var/log/seguranca/enviar_regras.log 2>> /var/log/seguranca/enviar_regras.err"
+        minute: "*/5"
+      when: not systemd_status.stat.exists
+
+    # --- Logrotate ---
+    - name: Configurar logrotate
+      ansible.builtin.copy:
+        dest: /etc/logrotate.d/seguranca_regras_orquestrador
+        content: |
+          /var/log/seguranca/*.log /var/log/seguranca/*.err {
+              daily
+              rotate 7
+              compress
+              missingok
+              notifempty
+              create 0640 root adm
+          }
+- name: Setup dos Hosts Finais
+  import_playbook: /opt/playbooks/setup_hosts_finais.yml

